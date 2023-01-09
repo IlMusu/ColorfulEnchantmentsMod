@@ -1,0 +1,7 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "colorfulenchantments:item/enchanted_colored_book",
+    "layer1": "colorfulenchantments:item/enchanted_colored_book_overlay"
+  }
+}
