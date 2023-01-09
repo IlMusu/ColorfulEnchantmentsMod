@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "id": "colorfulenchantments",
+  "version": "${version}",
+
+  "name": "Colorful Enchantments Mod",
+  "description": "Makes the enchantments a little more unique!",
+  "authors": [
+    "IlMusu"
+  ],
+
+  "license": "All Rights Reserved",
+  "icon": "assets/colorfulenchantments/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.ilmusu.colorfulenchantments.ColorfulEnchantmentsMod"
+    ],
+    "client": [
+      "com.ilmusu.colorfulenchantments.ColorfulEnchantmentsMod"
+    ]
+  },
+  "mixins": [
+    "colorfulenchantments.mixins.json"
+  ],
+
+  "depends": {
+    "fabricloader": ">=0.14.11",
+    "fabric-api": "*",
+    "minecraft": "~1.19.3",
+    "java": ">=17"
+  }
+}
