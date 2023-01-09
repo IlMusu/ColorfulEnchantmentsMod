@@ -7,6 +7,7 @@ import net.minecraft.client.render.model.BakedModelManager;
 import net.minecraft.client.render.model.json.ModelOverrideList;
 import net.minecraft.client.util.ModelIdentifier;
 import net.minecraft.client.world.ClientWorld;
+import net.minecraft.data.client.Model;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
@@ -30,13 +31,15 @@ public class EnchantedBookOverrides extends ModelOverrideList
     // This map contains the models that need to be used for a specific enchantment
     // If the enchantment id is not present in the map, the default model will be used
     private static final Map<Identifier, ModelIdentifier> BOOK_MODELS = new HashMap<>();
+    private static final ModelIdentifier DEFAULT_BOOK_MODEL = toModelIdentifier(Resources.ENCHANTED_COLORED_BOOK_IDENTIFIER);
     // This map contains the colors that need to be used for a specific enchantment
     private static final Map<Identifier, Integer> BOOK_COLORS = new HashMap<>();
+    private static final Integer DEFAULT_BOOK_COLOR = new Color(197, 19, 57).getRGB();
 
 
-    public static void overrideEnchantmentBookModel(Enchantment enchantment, ModelIdentifier model)
+    public static void overrideEnchantmentBookModel(Enchantment enchantment, Identifier model)
     {
-        BOOK_MODELS.put(Registries.ENCHANTMENT.getId(enchantment), model);
+        BOOK_MODELS.put(Registries.ENCHANTMENT.getId(enchantment), toModelIdentifier(model));
     }
 
     public static void overrideEnchantmentBookColor(Enchantment enchantment, Color color)
@@ -44,9 +47,9 @@ public class EnchantedBookOverrides extends ModelOverrideList
         BOOK_COLORS.put(Registries.ENCHANTMENT.getId(enchantment), color.getRGB());
     }
 
-    public static void overrideEnchantmentBook(Enchantment enchantment, ModelIdentifier model, Color color)
+    public static void overrideEnchantmentBook(Enchantment enchantment, Identifier model, Color color)
     {
-        overrideEnchantmentBookModel(enchantment, model);
+        overrideEnchantmentBookModel(enchantment, toModelIdentifier(model));
         overrideEnchantmentBookColor(enchantment, color);
     }
 
@@ -55,7 +58,7 @@ public class EnchantedBookOverrides extends ModelOverrideList
         Identifier identifier = getFirstEnchantment(stack);
         // Defaulting to base red if the color does not exist
         if(identifier == null || !BOOK_COLORS.containsKey(identifier))
-            return new Color(197, 19, 57).getRGB();
+            return DEFAULT_BOOK_COLOR;
         // Returning the found enchantment color
         return BOOK_COLORS.get(identifier);
     }
@@ -71,7 +74,7 @@ public class EnchantedBookOverrides extends ModelOverrideList
         if(enchantmentIdentifier == null)
             return model;
         // Obtaining the correct model identifier for the enchantment
-        ModelIdentifier bookModelIdentifier = Resources.ENCHANTED_COLORED_BOOK_IDENTIFIER;
+        ModelIdentifier bookModelIdentifier = DEFAULT_BOOK_MODEL;
         if(BOOK_MODELS.containsKey(enchantmentIdentifier))
             bookModelIdentifier = EnchantedBookOverrides.BOOK_MODELS.get(enchantmentIdentifier);
         // Returning the model from the identifier
@@ -88,5 +91,10 @@ public class EnchantedBookOverrides extends ModelOverrideList
             return null;
         // Returning the identifier of the first enchantment
         return EnchantmentHelper.getIdFromNbt((NbtCompound)list.get(0));
+    }
+
+    protected static ModelIdentifier toModelIdentifier(Identifier identifier)
+    {
+        return new ModelIdentifier(identifier, "inventory");
     }
 }

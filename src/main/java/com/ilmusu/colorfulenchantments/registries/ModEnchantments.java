@@ -1,6 +1,8 @@
 package com.ilmusu.colorfulenchantments.registries;
 
+import com.ilmusu.colorfulenchantments.Resources;
 import com.ilmusu.colorfulenchantments.client.models.items.EnchantedBookOverrides;
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.Enchantments;
 
 import java.awt.*;
@@ -46,5 +48,11 @@ public class ModEnchantments
         EnchantedBookOverrides.overrideEnchantmentBookColor(Enchantments.QUICK_CHARGE, new Color(74, 70, 69));
         EnchantedBookOverrides.overrideEnchantmentBookColor(Enchantments.PIERCING, new Color(168, 42, 40));
         EnchantedBookOverrides.overrideEnchantmentBookColor(Enchantments.MENDING, new Color(166, 237, 83));
+
+        EnchantedBookOverrides.overrideEnchantmentBookModel(Enchantments.BINDING_CURSE, Resources.CURSED_COLORED_BOOK_IDENTIFIER);
+        EnchantedBookOverrides.overrideEnchantmentBookColor(Enchantments.BINDING_CURSE, new Color(31, 3, 3));
+
+        EnchantedBookOverrides.overrideEnchantmentBookModel(Enchantments.VANISHING_CURSE, Resources.CURSED_COLORED_BOOK_IDENTIFIER);
+        EnchantedBookOverrides.overrideEnchantmentBookColor(Enchantments.VANISHING_CURSE, new Color(31, 3, 3));
     }
 }

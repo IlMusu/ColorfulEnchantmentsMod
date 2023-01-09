@@ -1,6 +1,7 @@
 package com.ilmusu.colorfulenchantments;
 
 import net.minecraft.client.util.ModelIdentifier;
+import net.minecraft.data.client.Model;
 import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,7 +13,8 @@ public class Resources
 
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
-    public static final ModelIdentifier ENCHANTED_COLORED_BOOK_IDENTIFIER = new ModelIdentifier(Resources.identifier("enchanted_colored_book"), "inventory");
+    public static final Identifier ENCHANTED_COLORED_BOOK_IDENTIFIER = Resources.identifier("enchanted_colored_book");
+    public static final Identifier CURSED_COLORED_BOOK_IDENTIFIER = Resources.identifier("cursed_colored_book");
 
     public static Identifier identifier(String string)
     {
