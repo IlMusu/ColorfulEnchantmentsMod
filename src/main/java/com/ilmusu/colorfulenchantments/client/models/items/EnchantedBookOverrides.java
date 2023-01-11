@@ -28,39 +28,76 @@ public class EnchantedBookOverrides extends ModelOverrideList
 {
     public static final EnchantedBookOverrides INSTANCE = new EnchantedBookOverrides();
 
-    // This map contains the models that need to be used for a specific enchantment
+    // This map contains the data related to the specific enchantments
     // If the enchantment id is not present in the map, the default model will be used
-    private static final Map<Identifier, ModelIdentifier> BOOK_MODELS = new HashMap<>();
-    private static final ModelIdentifier DEFAULT_BOOK_MODEL = toModelIdentifier(Resources.ENCHANTED_COLORED_BOOK_IDENTIFIER);
-    // This map contains the colors that need to be used for a specific enchantment
-    private static final Map<Identifier, Integer> BOOK_COLORS = new HashMap<>();
-    private static final Integer DEFAULT_BOOK_COLOR = new Color(197, 19, 57).getRGB();
+    private static final Map<Identifier, EnchantmentData> ENCHANTMENT_DATA = new HashMap<>();
 
 
     public static void overrideEnchantmentBookModel(Enchantment enchantment, Identifier model)
     {
-        BOOK_MODELS.put(Registries.ENCHANTMENT.getId(enchantment), toModelIdentifier(model));
+        // Getting the existing data or a new one
+        Identifier enchantmentID = Registries.ENCHANTMENT.getId(enchantment);
+        EnchantmentData data = ENCHANTMENT_DATA.getOrDefault(enchantmentID, new EnchantmentData());
+        // Setting the model to the data
+        data.setModelIdentifier(model);
+        // Resetting the data, now containing the model, to the map
+        ENCHANTMENT_DATA.put(Registries.ENCHANTMENT.getId(enchantment), data);
     }
 
     public static void overrideEnchantmentBookColor(Enchantment enchantment, Color color)
     {
-        BOOK_COLORS.put(Registries.ENCHANTMENT.getId(enchantment), color.getRGB());
+        // Getting the existing data or a new one
+        Identifier enchantmentID = Registries.ENCHANTMENT.getId(enchantment);
+        EnchantmentData data = ENCHANTMENT_DATA.getOrDefault(enchantmentID, new EnchantmentData());
+        // Setting the model to the data
+        data.setLaceColor(color);
+        // Resetting the data, now containing the model, to the map
+        ENCHANTMENT_DATA.put(Registries.ENCHANTMENT.getId(enchantment), data);
     }
 
-    public static void overrideEnchantmentBook(Enchantment enchantment, Identifier model, Color color)
-    {
-        overrideEnchantmentBookModel(enchantment, toModelIdentifier(model));
-        overrideEnchantmentBookColor(enchantment, color);
-    }
-
-    public static int getEnchantmentColor(ItemStack stack)
+    protected static EnchantmentData getEnchantmentData(ItemStack stack)
     {
         Identifier identifier = getFirstEnchantment(stack);
-        // Defaulting to base red if the color does not exist
-        if(identifier == null || !BOOK_COLORS.containsKey(identifier))
-            return DEFAULT_BOOK_COLOR;
+        if(identifier == null)
+            return null;
+        return ENCHANTMENT_DATA.getOrDefault(identifier, null);
+    }
+
+    public static int getLaceColor(ItemStack stack)
+    {
+        EnchantmentData data = getEnchantmentData(stack);
+        if(data == null)
+            return EnchantmentData.DEFAULT_LACE_COLOR;
         // Returning the found enchantment color
-        return BOOK_COLORS.get(identifier);
+        return data.getLaceColor();
+    }
+
+    public static boolean shouldOverrideGlintColor(ItemStack stack)
+    {
+        // Defaulting to base color if the color does not exist
+        EnchantmentData data = getEnchantmentData(stack);
+        if(data == null)
+            return false;
+        return data.shouldOverrideGlintColor();
+    }
+
+    public static int getGlintColor(ItemStack stack)
+    {
+        if(stack.getItem() == Items.ENCHANTED_BOOK)
+            return getBookGlintColor(stack);
+        return getItemGlintColor(stack);
+    }
+
+    public static int getBookGlintColor(ItemStack stack)
+    {
+        Identifier identifier = getFirstEnchantment(stack);
+        return ENCHANTMENT_DATA.get(identifier).bookGlintColor;
+    }
+
+    public static int getItemGlintColor(ItemStack stack)
+    {
+        Identifier identifier = getFirstEnchantment(stack);
+        return ENCHANTMENT_DATA.get(identifier).itemGlintColor;
     }
 
     @Nullable
@@ -69,14 +106,11 @@ public class EnchantedBookOverrides extends ModelOverrideList
     {
         if(stack.getItem() != Items.ENCHANTED_BOOK)
             return model;
-        // Gets the first enchantment from the stack, only that is considered for the coloring
-        Identifier enchantmentIdentifier = getFirstEnchantment(stack);
-        if(enchantmentIdentifier == null)
-            return model;
         // Obtaining the correct model identifier for the enchantment
-        ModelIdentifier bookModelIdentifier = DEFAULT_BOOK_MODEL;
-        if(BOOK_MODELS.containsKey(enchantmentIdentifier))
-            bookModelIdentifier = EnchantedBookOverrides.BOOK_MODELS.get(enchantmentIdentifier);
+        ModelIdentifier bookModelIdentifier = EnchantmentData.DEFAULT_MODEL;
+        EnchantmentData data = getEnchantmentData(stack);
+        if(data != null)
+            bookModelIdentifier = data.getModelIdentifier();
         // Returning the model from the identifier
         BakedModelManager manager = MinecraftClient.getInstance().getItemRenderer().getModels().getModelManager();
         return manager.getModel(bookModelIdentifier);
@@ -93,8 +127,85 @@ public class EnchantedBookOverrides extends ModelOverrideList
         return EnchantmentHelper.getIdFromNbt((NbtCompound)list.get(0));
     }
 
-    protected static ModelIdentifier toModelIdentifier(Identifier identifier)
+
+    protected static class EnchantmentData
     {
-        return new ModelIdentifier(identifier, "inventory");
+        protected static final ModelIdentifier DEFAULT_MODEL = toModelIdentifier(Resources.ENCHANTED_COLORED_BOOK_IDENTIFIER);
+        protected static final int DEFAULT_LACE_COLOR = new Color(197, 19, 57).getRGB();
+
+        protected boolean modelInitialized = false;
+        protected ModelIdentifier modelIdentifier;
+
+        protected boolean colorInitialized = false;
+        protected int laceColor;
+        protected int bookGlintColor;
+        protected int itemGlintColor;
+
+
+        public EnchantmentData()
+        {
+
+        }
+
+        public void setModelIdentifier(Identifier identifier)
+        {
+            this.modelInitialized = true;
+            this.modelIdentifier = toModelIdentifier(identifier);
+        }
+
+        public void setLaceColor(Color laceColor)
+        {
+            this.colorInitialized = true;
+            this.laceColor = laceColor.getRGB();
+            this.bookGlintColor = getBookGlintColor(laceColor);
+            this.itemGlintColor = getItemGlintColor(laceColor);
+        }
+
+        public ModelIdentifier getModelIdentifier()
+        {
+            if(!this.modelInitialized)
+                return DEFAULT_MODEL;
+            return this.modelIdentifier;
+        }
+
+        public int getLaceColor()
+        {
+            if(!this.colorInitialized)
+                return DEFAULT_LACE_COLOR;
+            return this.laceColor;
+        }
+
+        public boolean shouldOverrideGlintColor()
+        {
+            return this.colorInitialized;
+        }
+
+        public static int getBookGlintColor(Color laceColor)
+        {
+            // Fix the brightness in order to see darker colors
+            int glintColor = adjustBrightness(laceColor, 0.6F, 0.7F);
+            // Resetting transparency and then setting it
+            return (glintColor & (0x00FFFFFF)) | (50 << 24);
+        }
+
+        public static int getItemGlintColor(Color laceColor)
+        {
+            // Fix the brightness in order to see darker colors
+            int glintColor = adjustBrightness(laceColor, 0.6F, 0.7F);
+            // Resetting transparency and then setting it
+            return (glintColor & (0x00FFFFFF)) | (200 << 24);
+        }
+
+        public static int adjustBrightness(Color color, float bMin, float bMax)
+        {
+            float[] hsb = Color.RGBtoHSB(color.getRed(), color.getGreen(), color.getBlue(), null);
+            hsb[2] = (bMax - bMin) * hsb[2] + bMin;
+            return Color.HSBtoRGB(hsb[0], hsb[1], hsb[2]);
+        }
+
+        public static ModelIdentifier toModelIdentifier(Identifier identifier)
+        {
+            return new ModelIdentifier(identifier, "inventory");
+        }
     }
 }

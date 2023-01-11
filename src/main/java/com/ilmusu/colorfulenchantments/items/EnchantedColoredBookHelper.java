@@ -7,13 +7,14 @@ import net.minecraft.item.ItemStack;
 
 public class EnchantedColoredBookHelper
 {
+
     @Environment(EnvType.CLIENT)
     public static int getTint(ItemStack stack, int modelLayer)
     {
         return switch (modelLayer)
         {
             default -> 0xFFFFFF;
-            case 1 -> EnchantedBookOverrides.getEnchantmentColor(stack);
+            case 1 -> EnchantedBookOverrides.getLaceColor(stack);
         };
     }
 }

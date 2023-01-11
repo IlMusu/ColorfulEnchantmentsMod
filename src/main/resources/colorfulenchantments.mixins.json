@@ -4,9 +4,12 @@
   "package": "com.ilmusu.colorfulenchantments.mixins.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+
   ],
   "client": [
-    "ModelLoaderMixin"
+    "CustomCallbacksMixin$GameRendererCallbacks",
+    "CustomCallbacksMixin$ModelLoaderCallbacks",
+    "CustomCallbacksMixin$OverrideEnchantedBookGlintShader"
   ],
   "injectors": {
     "defaultRequire": 1

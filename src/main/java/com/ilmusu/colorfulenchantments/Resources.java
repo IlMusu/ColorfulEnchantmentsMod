@@ -15,6 +15,8 @@ public class Resources
 
     public static final Identifier ENCHANTED_COLORED_BOOK_IDENTIFIER = Resources.identifier("enchanted_colored_book");
     public static final Identifier CURSED_COLORED_BOOK_IDENTIFIER = Resources.identifier("cursed_colored_book");
+    public static final Identifier COLORED_GLINT_IDENTIFIER = new Identifier(Resources.MOD_ID, "textures/misc/colored_glint.png");
+
 
     public static Identifier identifier(String string)
     {

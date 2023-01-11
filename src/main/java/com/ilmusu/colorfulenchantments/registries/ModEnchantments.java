@@ -24,8 +24,8 @@ public class ModEnchantments
         EnchantedBookOverrides.overrideEnchantmentBookColor(Enchantments.SOUL_SPEED, new Color(106, 82, 68));
         EnchantedBookOverrides.overrideEnchantmentBookColor(Enchantments.SWIFT_SNEAK, new Color(81, 105, 103));
         EnchantedBookOverrides.overrideEnchantmentBookColor(Enchantments.SHARPNESS, new Color(128, 27, 27));
-        EnchantedBookOverrides.overrideEnchantmentBookColor(Enchantments.SHARPNESS, new Color(23, 64, 17));
-        EnchantedBookOverrides.overrideEnchantmentBookColor(Enchantments.SHARPNESS, new Color(37, 156, 20));
+        EnchantedBookOverrides.overrideEnchantmentBookColor(Enchantments.SMITE, new Color(23, 64, 17));
+        EnchantedBookOverrides.overrideEnchantmentBookColor(Enchantments.BANE_OF_ARTHROPODS, new Color(37, 156, 20));
         EnchantedBookOverrides.overrideEnchantmentBookColor(Enchantments.KNOCKBACK, new Color(26, 25, 25));
         EnchantedBookOverrides.overrideEnchantmentBookColor(Enchantments.FIRE_ASPECT, new Color(219, 24, 24));
         EnchantedBookOverrides.overrideEnchantmentBookColor(Enchantments.LOOTING, new Color(209, 209, 13));

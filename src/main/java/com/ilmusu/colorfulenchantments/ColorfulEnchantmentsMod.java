@@ -2,6 +2,7 @@ package com.ilmusu.colorfulenchantments;
 
 import com.ilmusu.colorfulenchantments.registries.ModEnchantments;
 import com.ilmusu.colorfulenchantments.registries.ModItems;
+import com.ilmusu.colorfulenchantments.registries.ModRenderLayers;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.ModInitializer;
 
@@ -19,5 +20,6 @@ public class ColorfulEnchantmentsMod implements ModInitializer, ClientModInitial
 		ModItems.registerModels();
 		ModItems.registerColors();
 		ModEnchantments.registerColors();
+		ModRenderLayers.register();
 	}
 }
