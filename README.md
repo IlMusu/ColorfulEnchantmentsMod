@@ -25,11 +25,11 @@ In which &lt;red&gt; , &lt;green&gt; and &lt;blue&gt; are integer values in the 
 More than one enchantments in a book are represented by adding more colored laces to the enchanted books.  
 But, because of this method, it is not possible to visualize more than four enchantments in the item.  
 
-<table style="width: 100%">
+<table style="width:100%">
 	<tr>
-		<th><img src=https://i.imgur.com/wj5yXAy.png></th>
-		<th><img src=https://i.imgur.com/Hs98z5a.png></th>
-		<th><img src=https://i.imgur.com/xlC4myT.png></th>
-		<th><img src=https://i.imgur.com/a7kpbiJ.png></th>
+		<th style="width:25%"><img src=https://i.imgur.com/wj5yXAy.png></th>
+		<th style="width:25%"><img src=https://i.imgur.com/Hs98z5a.png></th>
+		<th style="width:25%"><img src=https://i.imgur.com/xlC4myT.png></th>
+		<th style="width:25%"><img src=https://i.imgur.com/a7kpbiJ.png></th>
 	</tr>
 </table>
