@@ -8,5 +8,9 @@ Aren't you tired of having enchanted books with just <b>ONE COLOR</b> ?
 <img src=https://i.imgur.com/NAGKm5H.png>
 </p>
 
-This mods solves all the previous mentioned <i>really serious</i> problems of Minecraft Vanilla enchanted books by introducing a unique book for every enchantment (<b>even modded enchantments</b>).  For example, this is the same chest of before but with the mod installed:  
+This mods solves all the previous mentioned <i>really serious</i> problems of Minecraft Vanilla enchanted books by introducing a unique book for every enchantment (<b>even modded enchantments</b>).  For example, this is the same chest of before but with the mod active:  
+
+<p align="center">
+<img src=https://i.imgur.com/eEjx8Dh.png>
+</p>
 
