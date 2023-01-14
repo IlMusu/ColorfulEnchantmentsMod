@@ -1,4 +1,4 @@
-package com.ilmusu.colorfulenchantments.client.callbacks;
+package com.ilmusu.colorfulenchantments.callbacks;
 
 import com.mojang.datafixers.util.Pair;
 import net.fabricmc.fabric.api.event.Event;
@@ -13,7 +13,7 @@ import java.util.function.Consumer;
 
 public interface ShaderProgramsLoadingCallback
 {
-    // Called AFTER the registration of the vanilla shaders
+    // Called AFTER the registration of the vanilla ShaderProgram
     Event<ShaderProgramsLoadingCallback> AFTER = EventFactory.createArrayBacked(ShaderProgramsLoadingCallback.class,
             (listeners) -> (manager) ->
             {

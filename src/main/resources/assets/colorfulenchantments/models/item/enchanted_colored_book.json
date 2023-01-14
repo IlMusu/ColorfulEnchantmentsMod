@@ -1,7 +1,32 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "colorfulenchantments:item/enchanted_colored_book",
-    "layer1": "colorfulenchantments:item/enchanted_colored_book_overlay"
-  }
+    "layer0": "item/book"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "colorfulenchantments:enchantments": 0.25
+      },
+      "model": "colorfulenchantments:item/enchanted_colored_book_1"
+    },
+    {
+      "predicate": {
+        "colorfulenchantments:enchantments": 0.50
+      },
+      "model": "colorfulenchantments:item/enchanted_colored_book_2"
+    },
+    {
+      "predicate": {
+        "colorfulenchantments:enchantments": 0.75
+      },
+      "model": "colorfulenchantments:item/enchanted_colored_book_3"
+    },
+    {
+      "predicate": {
+        "colorfulenchantments:enchantments": 1.0
+      },
+      "model": "colorfulenchantments:item/enchanted_colored_book_4"
+    }
+  ]
 }

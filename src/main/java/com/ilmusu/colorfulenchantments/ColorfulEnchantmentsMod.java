@@ -1,8 +1,6 @@
 package com.ilmusu.colorfulenchantments;
 
-import com.ilmusu.colorfulenchantments.registries.ModEnchantments;
-import com.ilmusu.colorfulenchantments.registries.ModItems;
-import com.ilmusu.colorfulenchantments.registries.ModRenderLayers;
+import com.ilmusu.colorfulenchantments.registries.*;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.ModInitializer;
 
@@ -12,14 +10,20 @@ public class ColorfulEnchantmentsMod implements ModInitializer, ClientModInitial
 	public void onInitialize()
 	{
 		ModItems.register();
+		ModCommands.register();
+		ModMessages.ServerHandlers.register();
 	}
 
 	@Override
 	public void onInitializeClient()
 	{
-		ModItems.registerModels();
+		ModConfigurations.register();
+
 		ModItems.registerColors();
+		ModItems.registerModels();
+		ModItems.registerModelOverrides();
 		ModEnchantments.registerColors();
 		ModRenderLayers.register();
+		ModMessages.ClientHandlers.register();
 	}
 }

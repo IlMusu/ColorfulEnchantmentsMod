@@ -1,4 +1,4 @@
-package com.ilmusu.colorfulenchantments.client.callbacks;
+package com.ilmusu.colorfulenchantments.callbacks;
 
 import net.fabricmc.fabric.api.event.Event;
 import net.fabricmc.fabric.api.event.EventFactory;
