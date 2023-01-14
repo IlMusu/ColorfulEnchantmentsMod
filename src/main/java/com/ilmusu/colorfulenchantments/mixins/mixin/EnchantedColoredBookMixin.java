@@ -42,8 +42,7 @@ public class EnchantedColoredBookMixin
             // Returning the correct glint RenderLayer to render
             OverrideEnchantedBookGlintShader.enchantedBookStack = null;
             RenderLayer coloredGlintLayer = ModRenderLayers.getWhiteGlintDirect();
-            //cir.setReturnValue(VertexConsumers.union(provider.getBuffer(coloredGlintLayer), provider.getBuffer(layer)));
-            cir.setReturnValue(provider.getBuffer(layer));
+            cir.setReturnValue(VertexConsumers.union(provider.getBuffer(coloredGlintLayer), provider.getBuffer(layer)));
         }
     }
 
