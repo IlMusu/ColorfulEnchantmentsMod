@@ -1,3 +1,4 @@
+
 # COLORFUL ENCHANTMENTS MOD
 
 Aren't you tired of seeing chests filled with boring and undescribing enchanted books?  
@@ -14,6 +15,8 @@ This mods solves all the previous mentioned <i>really serious</i> problems of Mi
 	<img src=https://i.imgur.com/w9iu5AT.png>
 </p>
 
+The glint color for enchanted books has been changed to white in order to make the colors more visible.  
+
 ## CHANGING COLORS
 If you don't like a particular color assigned to an enchantment, you can change it with the following command:  
 ```
@@ -26,12 +29,12 @@ More than one enchantments in a book are represented by adding more colored lace
 But, because of this method, it is not possible to visualize more than four enchantments in the item.  
 
 <center>
-<table style="width:100%">
-	<tr>
-		<th style="width:25%"><img src=https://i.imgur.com/wj5yXAy.png></th>
-		<th style="width:25%"><img src=https://i.imgur.com/Hs98z5a.png></th>
-		<th style="width:25%"><img src=https://i.imgur.com/xlC4myT.png></th>
-		<th style="width:25%"><img src=https://i.imgur.com/a7kpbiJ.png></th>
-	</tr>
-</table>
+	<table width=100%>
+		<tr>
+			<th><img src=https://i.imgur.com/wj5yXAy.png></th>
+			<th><img src=https://i.imgur.com/Hs98z5a.png></th>
+			<th><img src=https://i.imgur.com/xlC4myT.png></th>
+			<th><img src=https://i.imgur.com/a7kpbiJ.png></th>
+		</tr>
+	</table>
 </center>
