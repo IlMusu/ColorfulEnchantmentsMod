@@ -20,7 +20,6 @@ public class ModEnchantments
         EnchantedColoredBookHelper.registerBookColor(Enchantments.DEPTH_STRIDER, new Color(17, 113, 166));
         EnchantedColoredBookHelper.registerBookColor(Enchantments.FROST_WALKER, new Color(73, 231, 235));
         EnchantedColoredBookHelper.registerBookColor(Enchantments.SOUL_SPEED, new Color(106, 82, 68));
-        EnchantedColoredBookHelper.registerBookColor(Enchantments.SWIFT_SNEAK, new Color(81, 105, 103));
         EnchantedColoredBookHelper.registerBookColor(Enchantments.SHARPNESS, new Color(128, 27, 27));
         EnchantedColoredBookHelper.registerBookColor(Enchantments.SMITE, new Color(23, 64, 17));
         EnchantedColoredBookHelper.registerBookColor(Enchantments.BANE_OF_ARTHROPODS, new Color(37, 156, 20));

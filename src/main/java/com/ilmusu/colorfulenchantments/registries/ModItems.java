@@ -10,7 +10,7 @@ import net.minecraft.client.item.ModelPredicateProviderRegistry;
 import net.minecraft.item.EnchantedBookItem;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtList;
-import org.joml.Math;
+import net.minecraft.util.math.MathHelper;
 
 import java.util.List;
 
@@ -40,7 +40,7 @@ public class ModItems
     {
         ModelPredicateProviderRegistry.register(Items.ENCHANTED_BOOK, Resources.identifier("enchantments"), (stack, world, entity, id) -> {
             NbtList enchantments = EnchantedBookItem.getEnchantmentNbt(stack);
-            return Math.clamp(enchantments.size(), 1.0F, 4.0F) / 4.0F;
+            return MathHelper.clamp(enchantments.size(), 1.0F, 4.0F) / 4.0F;
         });
     }
 }

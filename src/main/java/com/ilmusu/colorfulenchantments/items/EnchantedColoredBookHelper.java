@@ -16,8 +16,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtList;
-import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.registry.Registry;
 import org.jetbrains.annotations.Nullable;
 
 import java.awt.*;
@@ -63,7 +63,7 @@ public class EnchantedColoredBookHelper
         Identifier identifier = getEnchantmentIdentifier(stack, index);
         if(identifier == null)
             return null;
-        return Registries.ENCHANTMENT.get(identifier);
+        return Registry.ENCHANTMENT.get(identifier);
     }
 
     public static BakedModel getBookModel(ItemStack stack)
@@ -77,26 +77,26 @@ public class EnchantedColoredBookHelper
 
     public static void registerBookColor(Enchantment enchantment, Color color)
     {
-        Identifier enchantmentID = Registries.ENCHANTMENT.getId(enchantment);
+        Identifier enchantmentID = Registry.ENCHANTMENT.getId(enchantment);
 
         // The color must be validated by the configuration
         color = getConfigurationColor(enchantment, color);
 
         ColoredEnchantmentData data = COLORED_ENCHANTMENTS_DATA.getOrDefault(enchantmentID, new ColoredEnchantmentData());
         data.setLaceColor(color);
-        COLORED_ENCHANTMENTS_DATA.put(Registries.ENCHANTMENT.getId(enchantment), data);
+        COLORED_ENCHANTMENTS_DATA.put(Registry.ENCHANTMENT.getId(enchantment), data);
     }
 
     public static void overrideBookColor(Enchantment enchantment, Color color)
     {
-        Identifier enchantmentID = Registries.ENCHANTMENT.getId(enchantment);
+        Identifier enchantmentID = Registry.ENCHANTMENT.getId(enchantment);
 
         // Overriding the current configuration color
         setConfigurationColor(enchantment, color);
 
         ColoredEnchantmentData data = COLORED_ENCHANTMENTS_DATA.getOrDefault(enchantmentID, new ColoredEnchantmentData());
         data.setLaceColor(color);
-        COLORED_ENCHANTMENTS_DATA.put(Registries.ENCHANTMENT.getId(enchantment), data);
+        COLORED_ENCHANTMENTS_DATA.put(Registry.ENCHANTMENT.getId(enchantment), data);
     }
 
     public static int getBookColor(ItemStack stack, int index)
@@ -122,7 +122,7 @@ public class EnchantedColoredBookHelper
 
     private static Color getConfigurationColor(Enchantment enchantment, Color color)
     {
-        Identifier enchantmentID = Registries.ENCHANTMENT.getId(enchantment);
+        Identifier enchantmentID = Registry.ENCHANTMENT.getId(enchantment);
 
         // The color is set to the configuration if not already existing, these are set by the player
         String enchantmentStr = String.valueOf(enchantmentID);
@@ -134,7 +134,7 @@ public class EnchantedColoredBookHelper
 
     private static void setConfigurationColor(Enchantment enchantment, Color color)
     {
-        Identifier enchantmentID = Registries.ENCHANTMENT.getId(enchantment);
+        Identifier enchantmentID = Registry.ENCHANTMENT.getId(enchantment);
 
         // The color is set to the configuration if not already existing, these are set by the player
         String enchantmentStr = String.valueOf(enchantmentID);

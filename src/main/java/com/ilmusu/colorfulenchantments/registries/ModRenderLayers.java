@@ -18,7 +18,7 @@ import java.util.function.Supplier;
 
 public class ModRenderLayers extends RenderLayer
 {
-    private static net.minecraft.client.gl.ShaderProgram direct_white_glint_program;
+    private static net.minecraft.client.render.Shader direct_white_glint_program;
 
     private static final RenderLayer DIRECT_WHITE_GLINT =
         RenderLayer.of("direct_white_glint",
@@ -26,7 +26,7 @@ public class ModRenderLayers extends RenderLayer
             VertexFormat.DrawMode.QUADS,
             256,
             MultiPhaseParameters.builder()
-                .program(new ColoredShaderProgram(
+                .shader(new ColoredShader(
                         () -> direct_white_glint_program,
                         new Color(0.25F, 0.25F, 0.25F, 0.25F).getRGB())
                 )
@@ -49,7 +49,7 @@ public class ModRenderLayers extends RenderLayer
         ShaderProgramsLoadingCallback.AFTER.register((manager) ->
             List.of(
                 Pair.of(
-                    new net.minecraft.client.gl.ShaderProgram(
+                    new net.minecraft.client.render.Shader(
                         manager,
                         "rendertype_white_glint_direct",
                         VertexFormats.POSITION_TEXTURE),
@@ -71,11 +71,11 @@ public class ModRenderLayers extends RenderLayer
     }
 
     @Environment(EnvType.CLIENT)
-    protected static class ColoredShaderProgram extends ShaderProgram
+    protected static class ColoredShader extends RenderPhase.Shader
     {
         protected final float[] color = new float[4];
 
-        public ColoredShaderProgram(Supplier<net.minecraft.client.gl.ShaderProgram> supplier, int colorCode)
+        public ColoredShader(Supplier<net.minecraft.client.render.Shader> supplier, int colorCode)
         {
             super(supplier);
             // Converting the color code to color components

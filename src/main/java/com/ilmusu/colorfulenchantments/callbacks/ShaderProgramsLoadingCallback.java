@@ -3,7 +3,7 @@ package com.ilmusu.colorfulenchantments.callbacks;
 import com.mojang.datafixers.util.Pair;
 import net.fabricmc.fabric.api.event.Event;
 import net.fabricmc.fabric.api.event.EventFactory;
-import net.minecraft.client.gl.ShaderProgram;
+import net.minecraft.client.render.Shader;
 import net.minecraft.resource.ResourceFactory;
 
 import java.io.IOException;
@@ -17,11 +17,11 @@ public interface ShaderProgramsLoadingCallback
     Event<ShaderProgramsLoadingCallback> AFTER = EventFactory.createArrayBacked(ShaderProgramsLoadingCallback.class,
             (listeners) -> (manager) ->
             {
-                List<Pair<ShaderProgram, Consumer<ShaderProgram>>> custom = new ArrayList<>();
+                List<Pair<Shader, Consumer<Shader>>> custom = new ArrayList<>();
                 for (ShaderProgramsLoadingCallback listener : listeners)
                     custom.addAll(listener.handler(manager));
                 return custom;
             });
 
-    List<Pair<ShaderProgram, Consumer<ShaderProgram>>> handler(ResourceFactory manager) throws IOException;
+    List<Pair<Shader, Consumer<Shader>>> handler(ResourceFactory manager) throws IOException;
 }
