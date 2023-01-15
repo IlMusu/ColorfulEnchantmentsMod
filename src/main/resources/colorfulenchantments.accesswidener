@@ -1,6 +1,1 @@
 accessWidener v1 named
-# Functionalities for dynamic models
-extendable method net/minecraft/client/render/model/json/ModelOverrideList <init> ()V
-accessible field net/minecraft/client/render/BufferBuilderStorage entityBuilders Ljava/util/SortedMap;
-accessible method net/minecraft/entity/projectile/TridentEntity asItemStack() Lnet/minecraft/item/ItemStack;
-accessible field net/minecraft/entity/projectile/TridentEntity tridentStack Lnet/minecraft/item/ItemStack;
