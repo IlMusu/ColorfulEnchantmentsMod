@@ -25,6 +25,7 @@ public class ModRenderLayers extends RenderLayer
             VertexFormats.POSITION_TEXTURE,
             VertexFormat.DrawMode.QUADS,
             256,
+            false, false,
             MultiPhaseParameters.builder()
                 .shader(new ColoredShader(
                         () -> direct_white_glint_program,
