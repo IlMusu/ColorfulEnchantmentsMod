@@ -13,6 +13,9 @@
   "icon": "assets/colorfulenchantments/icon.png",
 
   "environment": "*",
+
+  "accessWidener" : "colorfulenchantments.accesswidener",
+
   "entrypoints": {
     "main": [
       "com.ilmusu.colorfulenchantments.ColorfulEnchantmentsMod"
