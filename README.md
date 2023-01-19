@@ -1,3 +1,4 @@
+
 # COLORFUL ENCHANTMENTS MOD
 
 Aren't you tired of seeing chests filled with <b>boring and undescribing enchanted books</b>?  
@@ -13,7 +14,7 @@ It also works for <b>modded enchantments</b> which are assigned a random color (
 For example, this is the same chest of the previous image but with the mod active:  
 
 <p align="center">
-	<img src=https://i.imgur.com/w9iu5AT.png>
+	<img src=https://i.imgur.com/cvudMX9.png>
 </p>
 
 Notice that, <b>only for enchanted books</b>, the glint color is changed to white to make colors more visible.
@@ -25,11 +26,26 @@ If you don't like a particular color assigned to an enchantment, you can change 
 ```
 In which <red>, <green> and <blue> are integer values in the range [0-255] that represent the components of the color.  
 These components can be obtained by searching for "color picker" the browser and selecting the color that you want.  
+  
+Instead, you can use the following command if you want to change the color back to the default one (if present):  
+```
+/colorfulenchantments enchantment reset
+```
 
 ## MORE ENCHANTMENTS IN A BOOK
 More than one enchantments in a book are represented by adding <b>more colored laces</b> to the enchanted books.  
 But, because of this method, <b>it is possible to visualize only the first four enchantments</b>.  
 
 <p align="center">
-	<img src=https://i.imgur.com/vIPBZ5P.png>
+	<img src=https://i.imgur.com/Ag6CwUU.png>
+</p>
+
+## MORE BOOK VARIATIONS
+In addition to the colored laces, the books have other small features that change according to the enchantments and can be used to distinguish more easility between different enchanted books.  
+1. In the first slot there is a cursed book which is characterized by <b>dark pages</b> and a <b>red pin</b>.
+2. In the second slot there is a treasure book which is characterized by a <b>green pin</b>.
+3. In the last slot there is a normal enchanted book.
+
+<p align="center">
+	<img src=https://i.imgur.com/BQoDKWL.png>
 </p>
