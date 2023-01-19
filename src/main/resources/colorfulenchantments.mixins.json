@@ -4,12 +4,12 @@
   "package": "com.ilmusu.colorfulenchantments.mixins.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "EnchantedColoredBookMixin$ItemRenderContextOverrideShader"
   ],
   "client": [
     "CustomCallbacksMixin$BufferBuilderStorageCallbacks",
     "CustomCallbacksMixin$GameRendererCallbacks",
-    "CustomCallbacksMixin$WorldRendererCallbacks",
-    "EnchantedColoredBookMixin$OverrideEnchantedBookGlintShader"
+    "CustomCallbacksMixin$WorldRendererCallbacks"
   ],
   "injectors": {
     "defaultRequire": 1
