@@ -18,26 +18,27 @@ import java.util.function.Supplier;
 
 public class ModRenderLayers extends RenderLayer
 {
-    private static net.minecraft.client.gl.ShaderProgram direct_white_glint_program;
+    private static net.minecraft.client.render.Shader direct_white_glint_program;
 
     private static final RenderLayer DIRECT_WHITE_GLINT =
-        RenderLayer.of("direct_white_glint",
-            VertexFormats.POSITION_TEXTURE,
-            VertexFormat.DrawMode.QUADS,
-            256,
-            MultiPhaseParameters.builder()
-                .program(new ColoredShaderProgram(
-                        () -> direct_white_glint_program,
-                        new Color(0.18F, 0.18F, 0.18F, 0.10F).getRGB())
-                )
-                .texture(new RenderPhase.Texture(Resources.COLORED_GLINT_IDENTIFIER, true, false))
-                .texturing(GLINT_TEXTURING)
-                .transparency(RenderPhase.GLINT_TRANSPARENCY)
-                .writeMaskState(RenderPhase.COLOR_MASK)
-                .cull(DISABLE_CULLING)
-                .depthTest(RenderPhase.EQUAL_DEPTH_TEST)
-                .build(false)
-        );
+            RenderLayer.of("direct_white_glint",
+                    VertexFormats.POSITION_TEXTURE,
+                    VertexFormat.DrawMode.QUADS,
+                    256,
+                    false, false,
+                    MultiPhaseParameters.builder()
+                            .shader(new ColoredShader(
+                                    () -> direct_white_glint_program,
+                                    new Color(0.18F, 0.18F, 0.18F, 0.10F).getRGB())
+                            )
+                            .texture(new RenderPhase.Texture(Resources.COLORED_GLINT_IDENTIFIER, true, false))
+                            .texturing(GLINT_TEXTURING)
+                            .transparency(RenderPhase.GLINT_TRANSPARENCY)
+                            .writeMaskState(RenderPhase.COLOR_MASK)
+                            .cull(DISABLE_CULLING)
+                            .depthTest(EQUAL_DEPTH_TEST)
+                            .build(false)
+            );
 
     public ModRenderLayers(String name, VertexFormat vertexFormat, VertexFormat.DrawMode drawMode, int expectedBufferSize, boolean hasCrumbling, boolean translucent, Runnable startAction, Runnable endAction)
     {
@@ -47,21 +48,21 @@ public class ModRenderLayers extends RenderLayer
     public static void register()
     {
         ShaderProgramsLoadingCallback.AFTER.register((manager) ->
-            List.of(
-                Pair.of(
-                    new net.minecraft.client.gl.ShaderProgram(
-                        manager,
-                        "rendertype_white_glint_direct",
-                        VertexFormats.POSITION_TEXTURE),
-                    shader -> direct_white_glint_program = shader
+                List.of(
+                        Pair.of(
+                                new net.minecraft.client.render.Shader(
+                                        manager,
+                                        "rendertype_white_glint_direct",
+                                        VertexFormats.POSITION_TEXTURE),
+                                shader -> direct_white_glint_program = shader
+                        )
                 )
-            )
         );
 
         BufferBuilderCreateCallback.AFTER.register(() ->
-            List.of(
-                    getWhiteGlintDirect()
-            )
+                List.of(
+                        getWhiteGlintDirect()
+                )
         );
     }
 
@@ -71,11 +72,11 @@ public class ModRenderLayers extends RenderLayer
     }
 
     @Environment(EnvType.CLIENT)
-    protected static class ColoredShaderProgram extends ShaderProgram
+    protected static class ColoredShader extends RenderPhase.Shader
     {
         protected final float[] color = new float[4];
 
-        public ColoredShaderProgram(Supplier<net.minecraft.client.gl.ShaderProgram> supplier, int colorCode)
+        public ColoredShader(Supplier<net.minecraft.client.render.Shader> supplier, int colorCode)
         {
             super(supplier);
             // Converting the color code to color components

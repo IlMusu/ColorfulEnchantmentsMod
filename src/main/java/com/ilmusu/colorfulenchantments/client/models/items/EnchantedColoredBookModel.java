@@ -4,11 +4,12 @@ import com.ilmusu.colorfulenchantments.Resources;
 import com.ilmusu.colorfulenchantments.client.models.BakedModelHelper;
 import com.ilmusu.colorfulenchantments.client.models.ItemBakedModel;
 import com.ilmusu.colorfulenchantments.items.EnchantedColoredBookHelper;
+import com.mojang.datafixers.util.Pair;
 import net.fabricmc.fabric.api.renderer.v1.mesh.Mesh;
 import net.fabricmc.fabric.api.renderer.v1.render.RenderContext;
 import net.minecraft.client.render.model.BakedModel;
-import net.minecraft.client.render.model.Baker;
 import net.minecraft.client.render.model.ModelBakeSettings;
+import net.minecraft.client.render.model.ModelLoader;
 import net.minecraft.client.render.model.UnbakedModel;
 import net.minecraft.client.render.model.json.JsonUnbakedModel;
 import net.minecraft.client.render.model.json.ModelOverrideList;
@@ -24,6 +25,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -62,14 +64,18 @@ public class EnchantedColoredBookModel implements UnbakedModel, ItemBakedModel
     }
 
     @Override
-    public void setParents(Function<Identifier, UnbakedModel> modelLoader)
+    public Collection<SpriteIdentifier> getTextureDependencies(Function<Identifier, UnbakedModel> unbakedModelGetter, Set<Pair<String, String>> unresolvedTextureReferences)
     {
-
+        return List.of(
+                EMPTY_SPRITE, ENCHANTED_BOOK_SPRITE, CURSED_BOOK_SPRITE,
+                LACE_SPRITE.apply(1), LACE_SPRITE.apply(2), LACE_SPRITE.apply(3), LACE_SPRITE.apply(4),
+                PIN_SPRITE.apply(1), PIN_SPRITE.apply(2), PIN_SPRITE.apply(3), PIN_SPRITE.apply(4)
+        );
     }
 
     @Nullable
     @Override
-    public BakedModel bake(Baker baker, Function<SpriteIdentifier, Sprite> textureGetter, ModelBakeSettings rotationContainer, Identifier modelId)
+    public BakedModel bake(ModelLoader baker, Function<SpriteIdentifier, Sprite> textureGetter, ModelBakeSettings rotationContainer, Identifier modelId)
     {
         Sprite emptySprite = textureGetter.apply(EMPTY_SPRITE);
         Sprite enchantedSprite = textureGetter.apply(ENCHANTED_BOOK_SPRITE);

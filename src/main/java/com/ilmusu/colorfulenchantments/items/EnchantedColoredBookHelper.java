@@ -10,8 +10,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtList;
-import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.registry.Registry;
 import org.jetbrains.annotations.Nullable;
 
 import java.awt.*;
@@ -77,13 +77,13 @@ public class EnchantedColoredBookHelper
         Identifier identifier = getEnchantmentIdentifier(stack, index);
         if(identifier == null)
             return null;
-        return Registries.ENCHANTMENT.get(identifier);
+        return Registry.ENCHANTMENT.get(identifier);
     }
 
     public static void registerLaceColor(Enchantment enchantment, Color color)
     {
         // Registering a default configuration
-        String enchantmentStr = String.valueOf(Registries.ENCHANTMENT.getId(enchantment));
+        String enchantmentStr = String.valueOf(Registry.ENCHANTMENT.getId(enchantment));
         String colorStr = Integer.toString(color.getRGB());
         ModConfigurations.getEnchantmentColors().setDefaultConfiguration(enchantmentStr, colorStr);
     }
@@ -91,14 +91,14 @@ public class EnchantedColoredBookHelper
     public static void overrideLaceColor(Enchantment enchantment, Color color)
     {
         // Overriding the current configuration
-        String enchantmentStr = String.valueOf(Registries.ENCHANTMENT.getId(enchantment));
+        String enchantmentStr = String.valueOf(Registry.ENCHANTMENT.getId(enchantment));
         String colorStr = Integer.toString(color.getRGB());
         ModConfigurations.getEnchantmentColors().setConfiguration(enchantmentStr, colorStr);
     }
 
     public static void resetLaceColor(Enchantment enchantment)
     {
-        String enchantmentStr = String.valueOf(Registries.ENCHANTMENT.getId(enchantment));
+        String enchantmentStr = String.valueOf(Registry.ENCHANTMENT.getId(enchantment));
         ModConfigurations.getEnchantmentColors().resetConfiguration(enchantmentStr);
     }
 

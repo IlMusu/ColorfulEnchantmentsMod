@@ -4,8 +4,8 @@ import com.ilmusu.colorfulenchantments.items.EnchantedColoredBookHelper;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.PacketByteBuf;
-import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.registry.Registry;
 
 import java.awt.*;
 
@@ -56,7 +56,7 @@ public class EnchantmentColorMessage extends _Message
     @Override
     public void handle(PlayerEntity player)
     {
-        Enchantment enchantment = Registries.ENCHANTMENT.get(this.enchantment);
+        Enchantment enchantment = Registry.ENCHANTMENT.get(this.enchantment);
         if(this.reset)
             EnchantedColoredBookHelper.resetLaceColor(enchantment);
         else

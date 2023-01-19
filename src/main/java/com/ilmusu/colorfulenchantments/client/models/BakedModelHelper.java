@@ -7,11 +7,7 @@ import net.fabricmc.fabric.api.renderer.v1.mesh.MeshBuilder;
 import net.fabricmc.fabric.api.renderer.v1.mesh.MutableQuadView;
 import net.fabricmc.fabric.api.renderer.v1.mesh.QuadEmitter;
 import net.minecraft.client.texture.Sprite;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.Vec2f;
-import net.minecraft.util.math.Vec3d;
-import org.joml.Vector3f;
-import org.joml.Vector4f;
+import net.minecraft.util.math.*;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -161,7 +157,7 @@ public class BakedModelHelper
     private static List<Direction> getTransparentSides(Sprite sprite, int x, int y)
     {
         // If this pixel is transparent, do nothing
-        if(sprite.getContents().isPixelTransparent(0, x, y))
+        if(sprite.isPixelTransparent(0, x, y))
             return new ArrayList<>();
 
         List<Direction> dirs = new ArrayList<>();
@@ -174,7 +170,7 @@ public class BakedModelHelper
             // The pixel must be contained in the texture
             if(!checkBounds(x + side[0], y - side[1]))
                 dirs.add(toCheckDir[i]);
-            else if(sprite.getContents().isPixelTransparent(0, x + side[0], y - side[1]))
+            else if(sprite.isPixelTransparent(0, x + side[0], y - side[1]))
                 dirs.add(toCheckDir[i]);
         }
 
@@ -217,21 +213,21 @@ public class BakedModelHelper
         Vec3d e1 = b1.multiply(size.y).multiply(PX/2);
         Vec3d s = pos.multiply(PX);
 
-        Vector3f v0 = s.subtract(e0).subtract(e1).toVector3f();
-        Vector3f v1 = s.add(e0).subtract(e1).toVector3f();
-        Vector3f v2 = s.add(e0).add(e1).toVector3f();
-        Vector3f v3 = s.subtract(e0).add(e1).toVector3f();
+        Vec3f v0 = new Vec3f(s.subtract(e0).subtract(e1));
+        Vec3f v1 = new Vec3f(s.add(e0).subtract(e1));
+        Vec3f v2 = new Vec3f(s.add(e0).add(e1));
+        Vec3f v3 = new Vec3f(s.subtract(e0).add(e1));
 
-        putVertex(emitter, 0, v0, uv.x, uv.w);
-        putVertex(emitter, 1, v1, uv.y, uv.w);
-        putVertex(emitter, 2, v2, uv.y, uv.z);
-        putVertex(emitter, 3, v3, uv.x, uv.z);
+        putVertex(emitter, 0, v0, uv.getX(), uv.getW());
+        putVertex(emitter, 1, v1, uv.getY(), uv.getW());
+        putVertex(emitter, 2, v2, uv.getY(), uv.getZ());
+        putVertex(emitter, 3, v3, uv.getX(), uv.getZ());
 
         emitter.spriteColor(0, -1, -1, -1, -1);
         emitter.nominalFace(normal);
     }
 
-    private static void putVertex(QuadEmitter emitter, int index, Vector3f pos, float u, float v)
+    private static void putVertex(QuadEmitter emitter, int index, Vec3f pos, float u, float v)
     {
         emitter.pos(index, pos);
         emitter.sprite(index, 0, u, v);
