@@ -18,9 +18,7 @@ public class ColorfulEnchantmentsMod implements ModInitializer, ClientModInitial
 	public void onInitializeClient()
 	{
 		ModConfigurations.register();
-
 		ModItems.registerColors();
-		ModItems.registerModels();
 		ModItems.registerModelOverrides();
 		ModEnchantments.registerColors();
 		ModRenderLayers.register();

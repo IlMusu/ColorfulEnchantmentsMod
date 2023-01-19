@@ -10,6 +10,8 @@ import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Objects;
 import java.util.Scanner;
+import java.util.function.BiFunction;
+import java.util.function.Supplier;
 
 public class Configuration
 {
@@ -17,19 +19,30 @@ public class Configuration
     private final String configurationFileName;
     private final File configurationFile;
     // The data that has been currently parsed from the configuration File
+    private final HashMap<String, String> defaults = new HashMap<>();
     private final HashMap<String, String> configuration = new HashMap<>();
+    // A fixer for making data compatible with different versions
+    private final BiFunction<String, String, String> fixer;
 
     public Configuration(String mod_id, String configurationFileName)
+    {
+        this(mod_id, configurationFileName, (name, value) -> value);
+    }
+
+    public Configuration(String mod_id, String configurationFileName, BiFunction<String, String, String> fixer)
     {
         // Gets the directory containing all the configuration files from Fabric
         Path path = Path.of(FabricLoader.getInstance().getConfigDir()+"/"+mod_id);
         // Creates the configuration File in memory
         this.configurationFileName = configurationFileName+".properties";
         this.configurationFile = path.resolve(this.configurationFileName).toFile();
+        this.fixer = fixer;
         // Creates the configuration file on disk (only if not already existing)
         this.createConfigurationFile();
         // Loads the current file configuration on the memory
         this.reloadConfigurationFromFile();
+        // Rewrite the file in case the fixed applied changes
+        this.writeConfigurationFile();
     }
 
     private void createConfigurationFile()
@@ -105,7 +118,21 @@ public class Configuration
             return;
         }
 
-        this.configuration.put(parts[0].trim(), parts[1].trim());
+        String name = parts[0].trim();
+        String value = this.fixer.apply(name, parts[1].trim());
+        this.configuration.put(name, value);
+    }
+
+    public void setDefaultConfiguration(String name, String value)
+    {
+        // The name and the value are trimmed just to be sure
+        name = name.trim();
+        value = value.trim();
+        // The default configuration can be set only once
+        if(this.defaults.containsKey(name))
+            return;
+
+        this.defaults.put(name, value);
     }
 
     public void setConfiguration(String name, String value)
@@ -117,24 +144,34 @@ public class Configuration
         if(Objects.equals(this.configuration.get(name), value))
             return;
 
+        // Setting the configuration
         this.configuration.put(name, value);
         this.writeConfigurationFile();
     }
 
-    public void setNonExistentConfiguration(String name, String value)
+    public void resetConfiguration(String name)
     {
         // The name and the value are trimmed just to be sure
         name = name.trim();
-        value = value.trim();
-        // If the name already exists, do not reset it
-        if(this.configuration.containsKey(name))
-            return;
 
-        this.setConfiguration(name, value);
+        if(!this.configuration.containsKey(name))
+            return;
+        this.configuration.remove(name);
+        this.writeConfigurationFile();
     }
 
-    public String getConfiguration(String name)
+    public String getConfigurationOrSet(String name, Supplier<String> other)
     {
-        return this.configuration.get(name.trim());
+        // The name and the value are trimmed just to be sure
+        name = name.trim();
+
+        if(this.configuration.containsKey(name))
+            return this.configuration.get(name);
+        if(this.defaults.containsKey(name))
+            return this.defaults.get(name);
+
+        String otherString = other.get();
+        this.setConfiguration(name, otherString);
+        return otherString;
     }
 }

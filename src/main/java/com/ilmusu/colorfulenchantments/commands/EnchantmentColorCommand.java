@@ -9,7 +9,7 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
@@ -35,19 +35,36 @@ public class EnchantmentColorCommand
                             )
                         )
                     )
+                    .then(CommandManager.literal("reset")
+                        .executes(context -> resetEnchantmentColor(
+                            context.getSource(),
+                            EnchantmentArgumentType.getEnchantment(context, "enchantment")
+                        ))
+                    )
                 )
             )
         );
     }
 
-    private static int changeEnchantmentColor(ServerCommandSource source, Enchantment enchantmentEntry, int red, int green, int blue)
+    private static int resetEnchantmentColor(ServerCommandSource source, Enchantment enchantment)
     {
         if(!(source.getEntity() instanceof ServerPlayerEntity player))
             return 0;
 
-        Identifier enchantment = Registry.ENCHANTMENT.getId(enchantmentEntry);
-        new EnchantmentColorMessage(enchantment, new Color(red, green, blue)).sendToClient(player);
-        source.sendFeedback(Text.of("commands.enchantment.color.success"), false);
+        Identifier enchantmentID = Registry.ENCHANTMENT.getId(enchantment);
+        new EnchantmentColorMessage(enchantmentID, true).sendToClient(player);
+        source.sendFeedback(new TranslatableText("commands.enchantment.reset.success"), false);
+        return 1;
+    }
+
+    private static int changeEnchantmentColor(ServerCommandSource source, Enchantment enchantment, int red, int green, int blue)
+    {
+        if(!(source.getEntity() instanceof ServerPlayerEntity player))
+            return 0;
+
+        Identifier enchantmentID = Registry.ENCHANTMENT.getId(enchantment);
+        new EnchantmentColorMessage(enchantmentID, new Color(red, green, blue)).sendToClient(player);
+        source.sendFeedback(new TranslatableText("commands.enchantment.color.success"), false);
         return 1;
     }
 }
