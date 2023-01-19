@@ -28,14 +28,14 @@ public class ModRenderLayers extends RenderLayer
             MultiPhaseParameters.builder()
                 .program(new ColoredShaderProgram(
                         () -> direct_white_glint_program,
-                        new Color(0.25F, 0.25F, 0.25F, 0.25F).getRGB())
+                        new Color(0.18F, 0.18F, 0.18F, 0.10F).getRGB())
                 )
                 .texture(new RenderPhase.Texture(Resources.COLORED_GLINT_IDENTIFIER, true, false))
                 .texturing(GLINT_TEXTURING)
                 .transparency(RenderPhase.GLINT_TRANSPARENCY)
                 .writeMaskState(RenderPhase.COLOR_MASK)
                 .cull(DISABLE_CULLING)
-                .depthTest(EQUAL_DEPTH_TEST)
+                .depthTest(RenderPhase.EQUAL_DEPTH_TEST)
                 .build(false)
         );
 

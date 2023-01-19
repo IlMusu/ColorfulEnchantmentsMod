@@ -1,12 +1,10 @@
 package com.ilmusu.colorfulenchantments.mixins.mixin;
 
-import com.ilmusu.colorfulenchantments.items.EnchantedColoredBookHelper;
 import com.ilmusu.colorfulenchantments.registries.ModRenderLayers;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.VertexConsumers;
-import net.minecraft.client.render.item.ItemModels;
 import net.minecraft.client.render.item.ItemRenderer;
 import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.client.render.model.json.ModelTransformation;
@@ -19,7 +17,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-public class EnchantedColoredBookMixin
+public abstract class EnchantedColoredBookMixin
 {
     @Mixin(ItemRenderer.class)
     public abstract static class OverrideEnchantedBookGlintShader
@@ -43,19 +41,6 @@ public class EnchantedColoredBookMixin
             OverrideEnchantedBookGlintShader.enchantedBookStack = null;
             RenderLayer coloredGlintLayer = ModRenderLayers.getWhiteGlintDirect();
             cir.setReturnValue(VertexConsumers.union(provider.getBuffer(coloredGlintLayer), provider.getBuffer(layer)));
-        }
-    }
-
-    @Mixin(ItemModels.class)
-    public abstract static class OverrideEnchantedBookModel
-    {
-        @Inject(method = "getModel(Lnet/minecraft/item/ItemStack;)Lnet/minecraft/client/render/model/BakedModel;", at = @At("HEAD"), cancellable = true)
-        private void overrideDefaultEnchantedBookModel(ItemStack stack, CallbackInfoReturnable<BakedModel> cir)
-        {
-            if(stack.getItem() != Items.ENCHANTED_BOOK)
-                return;
-            // Returning the correct BakedModel for the EnchantedBook stack
-            cir.setReturnValue(EnchantedColoredBookHelper.getBookModel(stack));
         }
     }
 }

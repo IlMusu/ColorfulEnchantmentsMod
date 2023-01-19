@@ -8,10 +8,8 @@
   "client": [
     "CustomCallbacksMixin$BufferBuilderStorageCallbacks",
     "CustomCallbacksMixin$GameRendererCallbacks",
-    "CustomCallbacksMixin$ModelLoaderCallbacks",
     "CustomCallbacksMixin$WorldRendererCallbacks",
-    "EnchantedColoredBookMixin$OverrideEnchantedBookGlintShader",
-    "EnchantedColoredBookMixin$OverrideEnchantedBookModel"
+    "EnchantedColoredBookMixin$OverrideEnchantedBookGlintShader"
   ],
   "injectors": {
     "defaultRequire": 1

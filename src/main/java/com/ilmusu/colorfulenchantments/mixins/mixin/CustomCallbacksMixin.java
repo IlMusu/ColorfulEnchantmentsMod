@@ -1,19 +1,14 @@
 package com.ilmusu.colorfulenchantments.mixins.mixin;
 
-import com.ilmusu.colorfulenchantments.callbacks.BookModelsRegisterCallback;
 import com.ilmusu.colorfulenchantments.callbacks.BufferBuilderCreateCallback;
 import com.ilmusu.colorfulenchantments.callbacks.ShaderProgramsLoadingCallback;
 import com.ilmusu.colorfulenchantments.callbacks.WorldRendererLayersCallback;
 import com.mojang.datafixers.util.Pair;
 import it.unimi.dsi.fastutil.objects.Object2ObjectLinkedOpenHashMap;
-import net.minecraft.client.color.block.BlockColors;
 import net.minecraft.client.gl.ShaderProgram;
 import net.minecraft.client.render.*;
-import net.minecraft.client.render.model.ModelLoader;
-import net.minecraft.client.util.ModelIdentifier;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.resource.ResourceFactory;
-import net.minecraft.util.profiler.Profiler;
 import org.joml.Matrix4f;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -25,7 +20,6 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 import java.util.function.Consumer;
 
 public abstract class CustomCallbacksMixin
@@ -38,36 +32,6 @@ public abstract class CustomCallbacksMixin
         {
             // Gathering all the custom shaders and adding them to the list of shaders
             list2.addAll(ShaderProgramsLoadingCallback.AFTER.invoker().handler(factory));
-        }
-    }
-
-    @Mixin(ModelLoader.class)
-    public abstract static class ModelLoaderCallbacks
-    {
-        @Shadow
-        protected abstract void addModel(ModelIdentifier modelId);
-
-        @Inject(method = "<init>", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/profiler/Profiler;swap(Ljava/lang/String;)V", ordinal = 3))
-        public void overrideEnchantedBookModels(BlockColors blockColors, Profiler profiler, Map<?,?> jsonUnbakedModels, Map<?,?> blockStates, CallbackInfo ci)
-        {
-            // The custom models for the EnchantmentBook are not automatically loaded since they are not linked to any
-            // actual item. Therefore, it is necessary to manually add them the models loading logic.
-
-            // It is assumed that the files describing the custom models follow the same structure of item models.
-            // Which mean that they are located in the same folder of the item models :
-            //   resources/assets/[MOD_ID]/models/item/[CUSTOM_BOOK_MODEL].json
-            // Therefore, it is possible to identify a model using only an Identifier:
-            //   new Identifier(MOD_ID, CUSTOM_MODEL)
-
-            // To load the custom model, it is necessary to create a ModelIdentifier: this EVENT gathers all the
-            // Identifiers which represent the custom models and transforms them into a ModelIdentifier.
-            List<ModelIdentifier> models =  BookModelsRegisterCallback.EVENT.invoker().handler().stream().map(
-                    (identifier) -> new ModelIdentifier(identifier, "inventory")
-            ).toList();
-
-            // Finally, it is possible to load all the custom models into the models loading logic.
-            for(ModelIdentifier model : models)
-                this.addModel(model);
         }
     }
 

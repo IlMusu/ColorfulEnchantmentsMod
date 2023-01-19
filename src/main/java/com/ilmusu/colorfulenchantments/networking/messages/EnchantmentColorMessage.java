@@ -12,6 +12,7 @@ import java.awt.*;
 public class EnchantmentColorMessage extends _Message
 {
     private Identifier enchantment;
+    private boolean reset;
     private Color color;
 
     public EnchantmentColorMessage()
@@ -26,11 +27,20 @@ public class EnchantmentColorMessage extends _Message
         this.color = color;
     }
 
+    public EnchantmentColorMessage(Identifier enchantment, boolean reset)
+    {
+        this();
+        this.enchantment = enchantment;
+        this.reset = reset;
+    }
+
     @Override
     public PacketByteBuf encode(PacketByteBuf buf)
     {
         buf.writeString(this.enchantment.toString());
-        buf.writeInt(color.getRGB());
+        buf.writeBoolean(this.reset);
+        if(!this.reset)
+            buf.writeInt(color.getRGB());
         return buf;
     }
 
@@ -38,13 +48,18 @@ public class EnchantmentColorMessage extends _Message
     public void decode(PacketByteBuf buf)
     {
         this.enchantment = new Identifier(buf.readString());
-        this.color = new Color(buf.readInt());
+        this.reset = buf.readBoolean();
+        if(!this.reset)
+            this.color = new Color(buf.readInt());
     }
 
     @Override
     public void handle(PlayerEntity player)
     {
         Enchantment enchantment = Registries.ENCHANTMENT.get(this.enchantment);
-        EnchantedColoredBookHelper.overrideBookColor(enchantment, this.color);
+        if(this.reset)
+            EnchantedColoredBookHelper.resetLaceColor(enchantment);
+        else
+            EnchantedColoredBookHelper.overrideLaceColor(enchantment, this.color);
     }
 }

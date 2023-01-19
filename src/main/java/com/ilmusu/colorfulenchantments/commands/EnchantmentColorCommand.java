@@ -38,9 +38,26 @@ public class EnchantmentColorCommand
                             )
                         )
                     )
+                    .then(CommandManager.literal("reset")
+                            .executes(context -> resetEnchantmentColor(
+                                    context.getSource(),
+                                    RegistryEntryArgumentType.getEnchantment(context, "enchantment")
+                            ))
+                    )
                 )
             )
         );
+    }
+
+    private static int resetEnchantmentColor(ServerCommandSource source, RegistryEntry<Enchantment> enchantmentEntry)
+    {
+        if(!(source.getEntity() instanceof ServerPlayerEntity player))
+            return 0;
+
+        Identifier enchantment = Registries.ENCHANTMENT.getId(enchantmentEntry.value());
+        new EnchantmentColorMessage(enchantment, true).sendToClient(player);
+        source.sendFeedback(Text.translatable("commands.enchantment.reset.success"), false);
+        return 1;
     }
 
     private static int changeEnchantmentColor(ServerCommandSource source, RegistryEntry<Enchantment> enchantmentEntry, int red, int green, int blue)
