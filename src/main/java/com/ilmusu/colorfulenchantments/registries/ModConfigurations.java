@@ -20,6 +20,8 @@ public class ModConfigurations
 
     private static String colorStringToIntString(String name, String value)
     {
-        return Integer.toString(ModUtils.colorFromString(value).getRGB());
+        if(ModUtils.isInRGBArrayFormat(value))
+            return Integer.toString(ModUtils.fromRGBArrayString(value).getRGB());
+        return value;
     }
 }
