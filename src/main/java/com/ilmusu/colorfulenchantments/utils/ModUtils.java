@@ -6,12 +6,20 @@ import java.util.List;
 
 public class ModUtils
 {
-    public static String colorToString(Color color)
+    public static boolean isInRGBArrayFormat(String value)
+    {
+        value = value.trim();
+        if(value.charAt(0) != '[' || value.charAt(value.length()-1) != ']')
+            return false;
+        return value.substring(1, value.length()-1).split(",").length == 3;
+    }
+
+    public static String toRGBArrayString(Color color)
     {
         return "["+color.getRed()+","+color.getGreen()+","+color.getBlue()+"]";
     }
 
-    public static Color colorFromString(String string)
+    public static Color fromRGBArrayString(String string)
     {
         string = string.trim().substring(1, string.length()-1);
         List<Integer> colors = Arrays.stream(string.split(",")).map((component) ->
