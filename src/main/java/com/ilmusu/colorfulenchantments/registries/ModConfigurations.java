@@ -15,13 +15,13 @@ public class ModConfigurations
 
     public static void register()
     {
-        ENCHANTMENT_COLORS_CONFIG = new Configuration(Resources.MOD_ID, "enchantments_colors", ModConfigurations::colorStringToIntString);
+        ENCHANTMENT_COLORS_CONFIG = new Configuration(Resources.MOD_ID, "enchantments_colors", ModConfigurations::fixColor);
     }
 
-    private static String colorStringToIntString(String name, String value)
+    private static String fixColor(String name, String value)
     {
         if(ModUtils.isInRGBArrayFormat(value))
             return Integer.toString(ModUtils.fromRGBArrayString(value).getRGB());
-        return value;
+        return Integer.toString(ModUtils.safeParseInt(value));
     }
 }
