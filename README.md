@@ -37,7 +37,7 @@ More than one enchantments in a book are represented by adding <b>more colored l
 But, because of this method, <b>it is possible to visualize only the first four enchantments</b>.  
 
 <p align="center">
-	<img src=https://i.imgur.com/Ag6CwUU.png>
+	<img src=https://i.imgur.com/IrnRleu.png>
 </p>
 
 ## MORE BOOK VARIATIONS
