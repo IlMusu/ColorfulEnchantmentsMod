@@ -131,8 +131,8 @@ public class EnchantedColoredBookHelper
     {
         Random rand = new Random();
         float hue = rand.nextFloat();
-        float saturation = rand.nextFloat(0.25F, 0.75F);
-        float brightness = rand.nextFloat(0.25F, 0.75F);
+        float saturation = rand.nextFloat()*0.75F+0.25F;
+        float brightness = rand.nextFloat()*0.75F+0.25F;
         Color color = Color.getHSBColor(hue, saturation, brightness);
 
         return Integer.toString(color.getRGB());
