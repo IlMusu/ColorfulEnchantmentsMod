@@ -23,8 +23,17 @@ public class ModUtils
     {
         string = string.trim().substring(1, string.length()-1);
         List<Integer> colors = Arrays.stream(string.split(",")).map((component) ->
-                Integer.parseInt(component.trim())
+                safeParseInt(component.trim())
         ).toList();
         return new Color(colors.get(0),colors.get(1),colors.get(2));
+    }
+
+    public static int safeParseInt(String value)
+    {
+        try {
+            return Integer.parseInt(value);
+        }catch (NumberFormatException exception){
+            return 0;
+        }
     }
 }
